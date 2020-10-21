@@ -1,0 +1,131 @@
+package hw.polygon;
+
+public class Polygon {
+	int x,y;
+	double w,h;
+	String type;
+	
+	public Polygon(int x, int y, double w, double h, String type) {
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		this.type = type;
+	}
+	public void show() {
+		System.out.println("도형의 종류는 " + type);
+		System.out.println("위치는 (" + x + "," + y + ")");
+	}
+	public double getArea() {
+		return -1;
+	}
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if(obj != null && obj instanceof Rectangle || obj instanceof Square)
+			result = true;
+		return result;
+	}
+}
+
+package hw.polygon;
+
+public class Rectangle extends Polygon {
+	public Rectangle(int x, int y, double w, double h, String type) {
+		super(x, y, w, h, type);
+	}
+	public double getArea() {
+		return w*h;
+	}
+	public void show() {
+		System.out.println("도형의 종류는 " + type);
+		System.out.println("위치는 (" + x + "," + y + ")");
+		System.out.println("넓이는 " + getArea());
+	}
+	public boolean IsSquare() {
+		return (type == "정사각형");
+	}
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if(obj != null && obj instanceof Rectangle || obj instanceof Square)
+			result = true;
+		return result;
+	}
+}
+
+package hw.polygon;
+
+public class Triangle extends Polygon {
+	public Triangle(int x, int y, double w, double h, String type) {
+		super(x, y, w, h, type);
+	}
+	public double getArea() {
+		return w*h/2;
+	}
+	public void show() {
+		System.out.println("도형의 종류는 " + type);
+		System.out.println("위치는 (" + x + "," + y + ")");
+		System.out.println("넓이는 " + getArea());
+	}
+}
+
+package hw.polygon;
+
+public class Square extends Rectangle {
+	public Square(int x, int y, double line, String type) {
+		super(x, y, line, 0, type);
+	}
+	public double getArea() {
+		return w*w;
+	}
+	public void show() {
+		System.out.println("도형의 종류는 " + type);
+		System.out.println("위치는 (" + x + "," + y + ")");
+		System.out.println("넓이는 " + getArea());
+	}
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if(obj != null && obj instanceof Rectangle || obj instanceof Square)
+			result = true;
+		return result;
+	}	
+}
+
+import hw.polygon.*;
+
+public class Canvas {
+	Polygon[] polygon;
+	
+	public Canvas(int n) {
+		polygon = new Polygon[n];
+	}
+	public void draw(Polygon p, int i) {
+		polygon[i] = p;
+	}
+	public void display() {
+		for(int i = 0; i < polygon.length; i++) {
+			polygon[i].show();
+			if(polygon[i].equals(polygon[i]))
+				if(((Rectangle)polygon[i]).IsSquare())
+					System.out.println("정사각형 입니다");				
+		}
+	}
+}
+
+import hw.polygon.*;
+
+public class CanvasApp {
+
+	public static void main(String[] args) {
+		Canvas canvas = new Canvas(3);
+		
+		Rectangle p1 = new Rectangle(1,1,10,5,"직사각형");
+		Square p2 = new Square(1,1,7,"정사각형");
+		Triangle p3 = new Triangle(1,1,5,8,"삼각형");
+		
+		canvas.draw(p1, 0);
+		canvas.draw(p2, 1);
+		canvas.draw(p3, 2);
+		
+		canvas.display();		
+	}
+}

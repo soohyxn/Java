@@ -1,0 +1,133 @@
+package hw.account;
+
+public class Account {
+	String accountNo;
+	String name;
+	int balance;
+	
+	public Account(String accountNo, String name, int balance) {
+		this.accountNo = accountNo;
+		this.name = name;
+		this.balance = balance;
+	}
+	
+	public void deposit(int amount) {
+		balance += amount;
+	}
+	public int withdraw(int amount) {
+		if(balance >= amount) {
+			balance -= amount;
+			return amount;
+		}
+		else
+			return 0;
+	}
+	public void check() {
+		System.out.println("잔액은 " + balance);
+	}
+
+}
+
+package hw.account;
+
+public class CheckingAccount extends Account {
+	String cardNo;
+	
+	public CheckingAccount(String accountNo, String name, int balance, String cardNo) {
+		super(accountNo, name, balance);
+		this.cardNo = cardNo;
+	}	
+	public int pay(String cardNo, int amount) {
+		if(this.cardNo.equals(cardNo))
+			return amount;
+		else
+			return 0;
+	}
+}
+
+package hw.account;
+
+public class CheckingTrafficCardAccount extends CheckingAccount{
+	boolean hasTrafficCard;
+	
+	public CheckingTrafficCardAccount(String accountNo, String name, int balance, String cardNo) {
+		super(accountNo,name,balance,cardNo);
+		hasTrafficCard = true;
+	}
+	
+	public int payTrafficCard(String cdNo, int amount) {
+		if(hasTrafficCard) 
+			return pay(cdNo, amount);
+		else
+			return 0;
+	}
+}
+
+
+package hw.account;
+
+public class CreditLineAccount extends Account {
+	int creditLine;
+	
+	public CreditLineAccount(String accountNo, String name, int balance, int creditLine) {
+		super(accountNo, name, balance);
+		this.creditLine = creditLine;
+	}
+	public int withdraw(int amount) {
+		if(amount <= balance + creditLine) {
+			balance -= amount;
+			return amount;
+		}
+		else
+			return 0;
+	}
+}
+
+
+package hw.account;
+
+public class BonusPointAccount extends Account{
+	int bonusPoint;
+	
+	public BonusPointAccount(String accountNo, String name, int balance) {
+		super(accountNo,name,balance);
+		bonusPoint = 0;
+	}	
+	public void deposit() {
+		bonusPoint += (balance* 0.001);
+	}
+	public void check() {
+		System.out.println("잔액은 " + balance);
+		System.out.println("포인트는 " + bonusPoint);
+	}
+}
+
+import hw.account.*;
+
+public class Bank {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Account acc1 = new Account("12345678","홍길동",100000);
+		acc1.deposit(50000);
+		System.out.println("인출액은 " + acc1.withdraw(10000));
+		acc1.check();
+		
+		CheckingAccount acc2 = new CheckingAccount("12345678","홍길동",100000,"13579");
+		acc2.deposit(acc2.pay("13579", 50000));
+		System.out.println("인출액은 " + acc2.withdraw(acc2.pay("13579", 10000)));
+		acc2.check();
+		
+		CheckingTrafficCardAccount acc3 = new CheckingTrafficCardAccount("12345678","홍길동",100000,"13579");
+		System.out.println("인출액은 " + acc3.withdraw(acc3.payTrafficCard("13579", 1000)));
+		acc3.check();
+		
+		CreditLineAccount acc4 = new CreditLineAccount("12345678","홍길동",100000,50000);
+		System.out.println("인출액은 " + acc4.withdraw(120000));
+		acc4.check();
+		
+		BonusPointAccount acc5 = new BonusPointAccount("12345678","홍길동",100000);
+		acc5.deposit();
+		acc5.check();
+	}
+}

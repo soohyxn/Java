@@ -1,0 +1,91 @@
+
+public class RectangleTest {
+	
+	static void show(Rectangle r) {
+		r.show();
+		System.out.print("넓이: " + r.getArea());
+		System.out.print(" , ");
+		System.out.println("둘레: " + r.getCircumference());
+	}
+	public static void main(String[] args) {
+		Rectangle rect1 = new Rectangle(0, 0, 10, 5);
+		RectangleTest.show(rect1);
+		
+		System.out.println();
+		
+		Rectangle rect2 = new Rectangle(new Point(0, 0), new Point(5, 10));
+		RectangleTest.show(rect2);
+		
+	}
+
+}
+public class Point {
+	private int x;
+	private int y;
+
+	Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	void setXY(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	int getX() {
+		return x;
+	}
+
+	int getY() {
+		return y;
+	}
+
+	void show() {
+		System.out.print("(" + x + "," + y + ")");
+	}
+}
+public class Rectangle {
+	int x1, y1, x2, y2;
+	int width;
+	int height;
+	int circumference;
+	int area;
+	
+	Rectangle(int x1, int y1, int x2, int y2) {
+		Point point1 = new Point(x1, y1);
+		Point point2 = new Point(x2, y2);
+	}
+	Rectangle(Point p1, Point p2) {
+		this.x1 = p1.getX();
+		this.y1 = p1.getY();
+		this.x2 = p2.getX();
+		this.y2 = p2.getY();
+	}
+	int getWidth() {
+		width = x2 - x1;
+		return width;
+	}
+	int getHeight() {
+		height = y2 - y1;
+		return height;
+	}
+	int getCircumference() {
+		circumference = 2*(getWidth() + getHeight());
+		return circumference;
+	}
+	int getArea() {
+		area = getWidth() * getHeight();
+		return width * height;
+	}
+	void show() {
+		Point p1 = new Point(this.x1,this.y1);
+		Point p2 = new Point(this.x2,this.y2);
+		System.out.print("[직사각형 " + getWidth() + "X" + getHeight() + ": ");
+		p1.show();
+		System.out.print(",");
+		p2.show();
+		System.out.println("]");
+	}	
+
+}

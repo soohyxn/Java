@@ -1,0 +1,15 @@
+import java.util.Scanner;
+public class InputTest {
+	public static void main(String[] args) {
+		int Year;
+		Scanner s = new Scanner(System.in);
+		
+		System.out.print("년도를 입력하세요: ");
+		Year = s.nextInt();
+		
+		if(((Year % 4 == 0) && (Year % 100 != 0)) || (Year % 400 == 0))
+			System.out.println(Year + "년은 윤년입니다.");
+		else
+			System.out.println(Year + "년은 평년입니다.");
+	}
+}

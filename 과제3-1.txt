@@ -1,0 +1,55 @@
+
+public class FruitSellerTest {
+	public static void main(String[] args) {
+		FruitSeller s = new FruitSeller();
+		FruitBuyer b = new FruitBuyer();
+		
+		System.out.println("======판매전======");
+		System.out.println(">>사과장수");
+		s.showResult();
+		System.out.println(">>나");
+		b.showResult();
+		
+		System.out.println("======판매후======");
+		System.out.println(">>사과장수");
+		int num = s.saleApple(2000);
+		System.out.println("판매개수: " + num + "개");
+		s.showResult();
+		System.out.println(">>나");
+		b.buyApple(s, 2000);
+		b.showResult();
+		
+		
+	}
+
+}
+
+class FruitSeller {
+	final int APPLE_UNITCOST = 1000;
+	int numOfApple = 20;
+	int money = 0;
+	
+	int saleApple(int m) {
+		int num = m / APPLE_UNITCOST;
+		numOfApple -= num;
+		money += m;
+		return num;
+	}
+	void showResult() {
+		System.out.println("남은사과: " + numOfApple + "개");
+		System.out.println("판매수익: " + money + "원");
+	}
+}
+class FruitBuyer {
+	int money = 5000;
+	int numOfApple = 0;
+	
+	void buyApple(FruitSeller s, int m) {
+		money -= m;
+		numOfApple = m / s.APPLE_UNITCOST;
+	}
+	void showResult() {
+		System.out.println("보유현금: " + money + "원");
+		System.out.println("구매사과개수: " + numOfApple + "개");
+	}
+}

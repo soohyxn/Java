@@ -1,0 +1,15 @@
+import java.util.Scanner;
+public class InputTest2 {
+	static final double PI = 3.141592;
+	
+	public static void main(String[] args) {
+		double r;
+		Scanner s = new Scanner(System.in);
+		
+		r = s.nextDouble();
+		while(r > 0) {
+			System.out.println("원의 넓이는" + r*r*PI + "입니다.");
+			r = s.nextDouble();
+		}		
+	}
+}

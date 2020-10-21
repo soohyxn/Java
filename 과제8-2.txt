@@ -1,0 +1,66 @@
+public class Account {
+	String accountNo;
+	String name;
+	int balance;
+	
+	public Account(String accountNo, String name, int balance) {
+		this.accountNo = accountNo;
+		this.name = name;
+		this.balance = balance;
+	}
+	
+	public void deposit(int amount) throws MalformedData {
+		if(amount < 0)
+			throw new MalformedData();
+		
+		balance += amount;	
+	}
+	public int withdraw(int amount) throws MalformedData, BalanceOfBoundException {
+		if(amount < 0)
+			throw new MalformedData();
+		if(balance < amount)
+			throw new BalanceOfBoundException();
+		
+		if(balance >= amount) {
+			balance -= amount;
+			return amount;
+		}
+		else
+			return 0;
+	}
+	public void check() {
+		System.out.println("잔액은 " + balance);
+	}
+
+}
+
+class BalanceOfBoundException extends RuntimeException {
+	BalanceOfBoundException() {
+		super("인출오류: 잔액을 초과하였습니다");
+	}
+}
+class MalformedData extends Exception {
+	MalformedData() {
+		super("오류: 잘못된 금액 입니다");
+	}
+}
+
+public class Bank {
+
+	public static void main(String[] args) {
+		Account account = new Account("12345678","홍길동",100000);
+		
+		try{
+			account.deposit(-1000);	
+			account.withdraw(-1000);
+			account.withdraw(200000);
+		}
+		catch(MalformedData e) {
+			System.out.println(e.getMessage());
+		}
+		catch(BalanceOfBoundException ie) {
+			System.out.println(ie.getMessage());
+		}
+	}
+}
+

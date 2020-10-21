@@ -1,0 +1,102 @@
+package hw.lotto;
+import java.util.Random;
+
+public class Lotto {
+	public int[] lottoNumber = new int[6];
+	public boolean isValid = true;
+	Random random = new Random();
+	
+	public Lotto(int n1, int n2, int n3, int n4, int n5, int n6) {
+		lottoNumber[0] = n1;
+		lottoNumber[1] = n2;
+		lottoNumber[2] = n3;
+		lottoNumber[3] = n4;
+		lottoNumber[4] = n5;
+		lottoNumber[5] = n6;
+	}
+	public Lotto(int[] numbers) {
+		lottoNumber = numbers;
+	}
+	public boolean verify() {
+		for(int i = 0; i < lottoNumber.length; i++) {
+			if(lottoNumber[i] > 45 && lottoNumber[i] < 1)
+				return false;
+			for(int j = i-1; j >= 0;j--) {
+				if(lottoNumber[i] == lottoNumber[j]) 
+					return false;
+				else 
+					return true;
+			}
+		}
+	}
+	public void show() {
+		if(verify()) {
+			for(int i = 0; i < lottoNumber.length; i++) 
+				System.out.println(lottoNumber[i]);
+		}
+		else
+			System.out.println("error");
+	}		
+	public int[] getNumbers() {
+		if(!verify())
+			return null;
+		else
+			return lottoNumber;				
+	}
+	public void generate() {
+		for(int i = 0; i < lottoNumber.length; i++) {
+			lottoNumber[i] = random.nextInt(45) + 1;
+		}
+		
+	}
+	public void setNum(int i, int n) {
+		i = n;
+	}
+}
+
+package hw.lotto;
+import java.util.Scanner;
+import hw.lotto.Lotto.*;
+
+public class LottoCard {
+	public Lotto[] lotto;
+	public int n;
+	Scanner s = new Scanner(System.in);
+	
+	public void Set1(int n) {
+		lotto = new Lotto[n];
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < 6; j++)
+				lotto[i].lottoNumber[j] = s.nextInt();
+		}		
+	}
+	public void Set2(int n) {
+		lotto = new Lotto[n];
+		for(int i = 0; i < n; i++)
+			lotto[i].generate();		
+	}
+
+}
+
+package hw.test;
+import hw.lotto.LottoCard;
+
+public class LottoEx {
+
+	public static void main(String[] args) {
+		LottoCard lotto1 = new LottoCard();
+		LottoCard lotto2 = new LottoCard();
+		
+		lotto1.Set2(5);
+		lotto2.Set1(3);
+		
+		for(int i = 0; i < 5; i++)
+			lotto1.lotto[i].show();
+		for(int i = 0; i < 3; i++)
+			lotto2.lotto[i].show();
+
+	}
+
+}
+
+

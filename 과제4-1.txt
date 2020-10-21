@@ -1,0 +1,92 @@
+public class TVUser {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TV tv = new TV(1, 5);
+		tv.pushPower();
+		tv.channelUP();
+		tv.volumeUp();
+		tv.channelUP();
+		tv.volumeUp();
+		tv.channelUP();
+		tv.volumeUp();
+		tv.channelUP();
+		tv.volumeUp();
+		tv.pushPower();
+		tv.channelUP();
+		tv.volumeUp();
+
+	}
+
+}
+public class TV {
+	boolean status = false;
+	int channel;
+	int volume;
+	final int channelmin = 1;
+	final int channelmax = 5;
+	final int volumemin = 1;
+	final int volumemax = 10;
+	
+	public TV(int channel, int volume) {
+		this.channel = channel;
+		this.volume = volume;
+	}
+	
+	void pushPower() {
+		status = !status;
+		if(status == true)
+			System.out.println("TV ON");
+		else
+			System.out.println("TV OFF");
+	}
+	void channelUP() {
+		if(status == true) {
+			if(channel <= channelmax) {
+			channel += 1;
+			System.out.println("TV의 채널은: " + channel);
+		}
+			else 
+			System.out.println("TV의 채널이 최대입니다");
+	}
+		else
+			System.out.println("TV의 전원을 켜주세요");	
+	}
+	void channelDown() {
+		if(status == true) {
+			if(channel >= channelmin) {
+				channel -= 1;
+				System.out.println("TV의 채널은: " + channel);
+			}
+			else 
+			System.out.println("TV의 채널이 최소입니다");
+		}
+		else
+			System.out.println("TV의 전원을 켜주세요");
+	}
+	void volumeUp() {
+		if(status == true) {
+			if(volume <= volumemax) {
+				volume += 1;
+				System.out.println("TV의 볼륨은: " + volume);
+			}
+			else 
+			System.out.println("TV의 볼륨이 최대입니다");
+		}
+		else
+			System.out.println("TV의 전원을 켜주세요");
+	}
+	void volumeDown() {
+		if(status == true) {
+			if(volume >= volumemin) {
+				volume -= 1;
+				System.out.println("TV의 볼륨은: " + volume);
+			}
+			else
+			System.out.println("TV의 볼륨이 최소입니다");
+		}
+		else
+			System.out.println("TV의 전원을 켜주세요");
+	}
+}
+

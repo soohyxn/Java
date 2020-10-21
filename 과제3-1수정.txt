@@ -1,0 +1,70 @@
+public class FruitSellerTest {
+	public static void main(String[] args) {
+		FruitSeller s1 = new FruitSeller(20, 1000);
+		FruitSeller s2 = new FruitSeller(30, 1200);
+		FruitBuyer b = new FruitBuyer(10000);
+		
+		System.out.println("======판매전======");
+		System.out.println(">>사과장수1");
+		s1.showResult();
+		System.out.println(">>사과장수2");
+		s2.showResult();
+		System.out.println(">>나");
+		b.showResult();
+		
+		System.out.println("======판매후======");
+		System.out.println(">>사과장수1");
+		int num = s1.saleApple(2000);
+		System.out.println("판매개수: " + num);
+		s1.showResult();
+		System.out.println(">>사과장수2");
+		int num2 = s2.saleApple(3600);
+		System.out.println("판매개수: " + num2);
+		s2.showResult();
+		System.out.println(">>나");
+		b.buyApple(s1, 2000);
+		b.buyApple(s2, 3600);
+		b.showResult();	
+	}
+
+}
+
+class FruitSeller {
+	private int APPLE_UNITCOST;
+	private int numOfApple;
+	private int money = 0;
+	
+	FruitSeller(int numOfApple, int APPLE_UNITCOST ) {
+		this.numOfApple = numOfApple;
+		this.APPLE_UNITCOST = APPLE_UNITCOST;		
+	}
+	int getAPPLE_UNITCOST() {
+		return APPLE_UNITCOST;
+	}
+	int saleApple(int m) {
+		int num = m / APPLE_UNITCOST;
+		numOfApple -= num;
+		money += m;
+		return num;
+	}
+	void showResult() {
+		System.out.println("남은사과: " + numOfApple + "개");
+		System.out.println("판매수익: " + money + "원");
+	}
+}
+class FruitBuyer {
+	private int money;
+	private int numOfApple;
+	
+	FruitBuyer(int money) {
+		this.money = money;
+	}
+	void buyApple(FruitSeller s, int m) {
+		money -= m;
+		numOfApple += m / s.getAPPLE_UNITCOST();
+	}
+	void showResult() {
+		System.out.println("보유현금: " + money + "원");
+		System.out.println("구매사과개수: " + numOfApple + "개");
+	}
+}

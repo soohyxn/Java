@@ -1,0 +1,143 @@
+import hw.account.*;
+
+public class Bank {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Account[] account = new Account[5];
+		account[0] = new Account("12345678","홍길동",100000);
+		account[1] = new CheckingAccount("12345678","홍길동",100000,"13579");
+		account[2] = new CheckingTrafficCardAccount("12345678","홍길동",100000,"13579");
+		account[3] = new CreditLineAccount("12345678","홍길동",100000,50000);
+		account[4] = new BonusPointAccount("12345678","홍길동",100000);
+		
+		account[0].deposit(50000);
+		System.out.println("인출액은 " + account[0].withdraw(10000));
+		account[0].check();
+		
+		if(account[1] instanceof Account) {
+			account[1].deposit(((CheckingAccount)account[1]).pay("13579", 50000));
+			System.out.println("인출액은 " + account[1].withdraw(((CheckingAccount)account[1]).pay("13579", 10000)));
+			account[1].check();
+		}
+		
+		if(account[2] instanceof Account) {
+			System.out.println("인출액은 " + account[2].withdraw(((CheckingTrafficCardAccount)account[2]).payTrafficCard("13579", 1000)));
+			account[2].check();
+		}
+		
+		if(account[3] instanceof Account) {
+			System.out.println("인출액은 " + account[3].withdraw(120000));
+			account[3].check();
+		}
+		
+		if(account[4] instanceof Account) {
+			((BonusPointAccount)account[4]).deposit();
+			account[4].check();
+		}
+
+	}
+}
+package hw.account;
+
+public class Account {
+	String accountNo;
+	String name;
+	int balance;
+	
+	public Account(String accountNo, String name, int balance) {
+		this.accountNo = accountNo;
+		this.name = name;
+		this.balance = balance;
+	}
+	
+	public void deposit(int amount) {
+		balance += amount;
+	}
+	public int withdraw(int amount) {
+		if(balance >= amount) {
+			balance -= amount;
+			return amount;
+		}
+		else
+			return 0;
+	}
+	public void check() {
+		System.out.println("잔액은 " + balance);
+	}
+
+}
+
+package hw.account;
+
+public class CheckingAccount extends Account {
+	String cardNo;
+	
+	public CheckingAccount(String accountNo, String name, int balance, String cardNo) {
+		super(accountNo, name, balance);
+		this.cardNo = cardNo;
+	}	
+	public int pay(String cardNo, int amount) {
+		if(this.cardNo.equals(cardNo))
+			return amount;
+		else
+			return 0;
+	}
+}
+
+package hw.account;
+
+public class CheckingTrafficCardAccount extends CheckingAccount{
+	boolean hasTrafficCard;
+	
+	public CheckingTrafficCardAccount(String accountNo, String name, int balance, String cardNo) {
+		super(accountNo,name,balance,cardNo);
+		hasTrafficCard = true;
+	}
+	
+	public int payTrafficCard(String cdNo, int amount) {
+		if(hasTrafficCard) 
+			return pay(cdNo, amount);
+		else
+			return 0;
+	}
+}
+
+
+package hw.account;
+
+public class CreditLineAccount extends Account {
+	int creditLine;
+	
+	public CreditLineAccount(String accountNo, String name, int balance, int creditLine) {
+		super(accountNo, name, balance);
+		this.creditLine = creditLine;
+	}
+	public int withdraw(int amount) {
+		if(amount <= balance + creditLine) {
+			balance -= amount;
+			return amount;
+		}
+		else
+			return 0;
+	}
+}
+
+
+package hw.account;
+
+public class BonusPointAccount extends Account{
+	int bonusPoint;
+	
+	public BonusPointAccount(String accountNo, String name, int balance) {
+		super(accountNo,name,balance);
+		bonusPoint = 0;
+	}	
+	public void deposit() {
+		bonusPoint += (balance* 0.001);
+	}
+	public void check() {
+		System.out.println("잔액은 " + balance);
+		System.out.println("포인트는 " + bonusPoint);
+	}
+}

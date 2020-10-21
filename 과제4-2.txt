@@ -1,0 +1,42 @@
+
+public class ChlidTest {
+	public static void main(String[] args) {
+		Child child1 = new Child(15);
+		Child child2 = new Child(9);
+		
+		System.out.println(">>>>>>1차 게임");
+		child2.giveCrystal(child1,7);
+		System.out.print("어린이1의 ");
+		child1.showResult();
+		System.out.print("어린이2의 ");
+		child2.showResult();
+		
+		System.out.println(">>>>>>2차 게임");
+		child1.giveCrystal(child2,7);
+		System.out.print("어린이1의 ");
+		child1.showResult();
+		System.out.print("어린이2의 ");
+		child2.showResult();
+	}
+}
+public class Child {
+	int numOfCrystal;
+	
+	Child(int numOfCrystal) {
+		this.numOfCrystal = numOfCrystal;
+	}
+	void giveCrystal(Child child, int num) {
+		if(numOfCrystal-num <= 0) 
+			System.out.println("구슬의 개수가 0개 이하입니다.");
+		else {
+		numOfCrystal -= num;
+		child.receiveCrystal(num);
+		}
+	}
+	void receiveCrystal(int num) {
+			numOfCrystal += num; 
+	}
+	void showResult() {
+		System.out.println("현재 구슬의 개수는: " + numOfCrystal);
+	}
+}

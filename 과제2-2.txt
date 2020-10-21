@@ -1,0 +1,34 @@
+
+public class CircleTest {
+	public static void main(String[] args) {
+		Circle c1 = new Circle();
+		Circle c2 = new Circle();
+		
+		System.out.println(">>c1");
+		double Round1 = c1.CircleRound(10);
+		System.out.println("원의 둘레: " + Round1);
+		double Area1 = c1.CircleArea(10);
+		System.out.println("원의 넓이: " + Area1);
+		
+		System.out.println(">>c2");
+		double Round2 = c2.CircleRound(20);
+		System.out.println("원의 둘레: " + Round2);
+		double Area2 = c2.CircleArea(20);
+		System.out.println("원의 넓이: " + Area2);
+		
+	}
+
+}
+class Circle {
+	final double PI = 3.141592;
+	
+	double CircleRound(int radius) {
+		double Round = 2*radius*PI;
+		return Round;
+	}
+	
+	double CircleArea(int radius) {
+		double Area = radius*radius*PI;
+		return Area;
+	}
+}
